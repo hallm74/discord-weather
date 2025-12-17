@@ -12,7 +12,10 @@ function formatTime(iso, timezone, abbreviation) {
   const ampm = hour >= 12 ? 'PM' : 'AM';
   hour = hour % 12 || 12; // Convert 0 to 12, and 13-23 to 1-11
   
-  return `${hour}:${minute} ${ampm} ${abbreviation || 'CST'}`;
+  // Map GMT-6 to CST for cleaner display
+  const displayAbbr = abbreviation === 'GMT-6' ? 'CST' : (abbreviation || 'CST');
+  
+  return `${hour}:${minute} ${ampm} ${displayAbbr}`;
 }
 
 function formatMessage({ locationName, current, daily, timezone, timezoneAbbreviation, runningLayers }) {
